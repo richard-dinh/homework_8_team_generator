@@ -54,6 +54,23 @@ const init = async _ =>{
   
 }
 
+const getTeamMembers = async _ => {
+  let members = []
+  let engineerNames = []
+  let
+    let { engineerSize } = await prompt([
+      {
+        input: 'number',
+        name: 'engineerSize',
+        message: 'How many Engineers do you have on your team?',
+      }
+    ])
+    getEngineerInfo(engineerSize)
+    //populating the engineerNames array
+  }
+  return members
+}
+
 
 
 init()
