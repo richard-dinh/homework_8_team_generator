@@ -49,15 +49,18 @@ const init = async _ =>{
     }
   ])
   person = new Manager(managerName, managerID, managerEmail, managerPhone)
+  team.push(person)
   console.log(team)
-  
+  let engineerAndInterns = await getTeamMembers()
+  console.log('team:')
+  //combing team array with engineer and interns array to get full team in one array
+  team = team.concat(engineerAndInterns)
+  console.log(team)
   
 }
 
 const getTeamMembers = async _ => {
   let members = []
-  let engineerNames = []
-  let
     let { engineerSize } = await prompt([
       {
         input: 'number',
@@ -65,12 +68,44 @@ const getTeamMembers = async _ => {
         message: 'How many Engineers do you have on your team?',
       }
     ])
-    getEngineerInfo(engineerSize)
-    //populating the engineerNames array
-  }
+    let engineerTeam = await getEngineerInfo(engineerSize)
+    members = members.concat(engineerTeam)
+    console.log(members)
   return members
 }
 
-
+//function to get Engineer Info
+const getEngineerInfo = async (size) =>{
+  let engineerInfo =[]
+  for(let i = 0; i<size; i++){
+    let {name} = await prompt ([
+      {
+        type: 'input',
+        name: 'name',
+        message: `What is the name of Engineer #${i+1}?`
+      }
+    ])
+    let {id, email, github} = await prompt ([
+      {
+        type: 'number',
+        name: 'id',
+        message: `What is ${name}'s ID?`
+      },
+      {
+        type: 'input',
+        name: 'email',
+        message: `What is ${name}'s email?`
+      },
+      {
+        type: 'input',
+        name: 'github',
+        message: `What is ${name}'s Github username?`
+      }
+    ])
+    let member = new Engineer(name, id, email, github)
+    engineerInfo.push(member)
+  }
+  return engineerInfo
+}
 
 init()
