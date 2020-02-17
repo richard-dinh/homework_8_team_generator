@@ -6,7 +6,7 @@ const Manager = require('./lib/Manager.js')
 
 let team = []
 let person
-const init = async _ =>{
+const init = async function(){
   let {managerName} = await prompt([
     {
       type: 'input',
@@ -59,8 +59,10 @@ const init = async _ =>{
   
 }
 
-const getTeamMembers = async _ => {
+const getTeamMembers = async function() {
+  //populatring interns and engineers in members array
   let members = []
+  //getting number of interns
     let { engineerSize } = await prompt([
       {
         input: 'number',
@@ -68,14 +70,28 @@ const getTeamMembers = async _ => {
         message: 'How many Engineers do you have on your team?',
       }
     ])
-    let engineerTeam = await getEngineerInfo(engineerSize)
-    members = members.concat(engineerTeam)
-    console.log(members)
+  let engineerTeam = await getEngineerInfo(engineerSize)
+  //getting number of interns
+  let { internSize } = await prompt([
+    {
+      input: 'number',
+      name: 'internSize',
+      message: 'How many Interns do you have on your team?',
+    }
+  ])
+  let internTeam = await getInternInfo(internSize)
+
+  //adding engineering members to members array
+  members = members.concat(engineerTeam)
+  //adding intern members to members array
+  members = members.concat(internTeam)
+  console.log('members:')
+  console.log(members)
   return members
 }
 
 //function to get Engineer Info
-const getEngineerInfo = async (size) =>{
+const getEngineerInfo = async function (size){
   let engineerInfo =[]
   for(let i = 0; i<size; i++){
     let {name} = await prompt ([
@@ -102,10 +118,49 @@ const getEngineerInfo = async (size) =>{
         message: `What is ${name}'s Github username?`
       }
     ])
+     //creating new Engineer object object
     let member = new Engineer(name, id, email, github)
+    //pushing engineer object to array
     engineerInfo.push(member)
   }
+  //returning array with all engineer info
   return engineerInfo
+}
+
+const getInternInfo = async function(size){
+  let internArr =[]
+  for (let i=0; i<size; i++){
+    let {name} = await prompt([
+      {
+        type:'input',
+        name: 'name',
+        message: `What is the name of Intern #${i+1}?`
+      }
+    ])
+   let {id, email, school} = await prompt([
+     {
+       type: 'number',
+       name: 'id',
+       message: `What is ${name}'s ID?`
+     },
+     {
+       type: 'input',
+       name: 'email',
+       message: `What is ${name}'s email?`
+     },
+     {
+       type: 'input',
+       name: 'school',
+       message: `What is school does ${name} attend?`
+     }
+   ])
+   //creating new intern object
+   let internInfo = new Intern(name, id, email, school)
+   //populating array with new intern object
+   internArr.push(internInfo)
+  }
+  //return all intern info
+  return internArr
 }
 
 init()
