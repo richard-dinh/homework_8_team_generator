@@ -3,7 +3,8 @@ const Employee = require("./lib/Employee.js")
 const Engineer = require('./lib/Engineer.js')
 const Intern = require('./lib/Intern.js')
 const Manager = require('./lib/Manager.js')
-
+const generateHTML = require('./lib/generateHTML.js')
+const fs = require('fs')
 let team = []
 let person
 const init = async function(){
@@ -59,6 +60,10 @@ const init = async function(){
   
 }
 
+const createMarkdown = function (data){
+  fs.writeFile(`./output/main.html`, generateHTML(data), error => error ? console.log(error) : null)
+}
+
 const getTeamMembers = async function() {
   //populatring interns and engineers in members array
   let members = []
@@ -87,7 +92,7 @@ const getTeamMembers = async function() {
   members = members.concat(internTeam)
   console.log('members:')
   console.log(members)
-  return members
+  generateHTML(members)
 }
 
 //function to get Engineer Info
