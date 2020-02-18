@@ -57,6 +57,7 @@ const init = async function(){
   //combing team array with engineer and interns array to get full team in one array
   team = team.concat(engineerAndInterns)
   console.log(team)
+  createMarkdown(team)
   
 }
 
@@ -92,7 +93,7 @@ const getTeamMembers = async function() {
   members = members.concat(internTeam)
   console.log('members:')
   console.log(members)
-  generateHTML(members)
+  return members
 }
 
 //function to get Engineer Info
