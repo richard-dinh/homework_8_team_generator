@@ -1,5 +1,11 @@
-.cardStyle{
+html {
+  box-sizing: border-box;
+}
+
+.cardStyle {
   padding-left: 0px;
   padding-right: 0px;
-  margin-right: 10px;
+  margin: 0 auto;
+  margin-right: 5px;
+  margin-bottom: 20px;
 }
