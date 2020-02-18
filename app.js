@@ -15,7 +15,7 @@ const init = async function(){
       message: 'Welcome to the Team Builder! What is the name of the team manager?'
     }
   ])
-  console.log(managerName)
+
   let {managerID, managerEmail, managerPhone} = await prompt([
     {
       type: 'number',
@@ -51,12 +51,9 @@ const init = async function(){
   ])
   person = new Manager(managerName, managerID, managerEmail, managerPhone)
   team.push(person)
-  console.log(team)
   let engineerAndInterns = await getTeamMembers()
-  console.log('team:')
   //combing team array with engineer and interns array to get full team in one array
   team = team.concat(engineerAndInterns)
-  console.log(team)
   createMarkdown(team)
   
 }
@@ -91,8 +88,6 @@ const getTeamMembers = async function() {
   members = members.concat(engineerTeam)
   //adding intern members to members array
   members = members.concat(internTeam)
-  console.log('members:')
-  console.log(members)
   return members
 }
 
